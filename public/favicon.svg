@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background with rounded corners -->
+  <rect width="64" height="64" rx="14" fill="#1B6B3A"/>
+  
+  <!-- Decorative inner ring -->
+  <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" fill="none"/>
+  
+  <!-- Open book pages -->
+  <rect x="14" y="26" width="17" height="18" rx="2" fill="white" opacity="0.95"/>
+  <rect x="33" y="26" width="17" height="18" rx="2" fill="white" opacity="0.85"/>
+  
+  <!-- Book spine -->
+  <rect x="30.5" y="24" width="3" height="22" rx="1.5" fill="#C9A84C"/>
+  
+  <!-- Lines on left page (text) -->
+  <rect x="17" y="30" width="10" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.4"/>
+  <rect x="17" y="33.5" width="8" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.4"/>
+  <rect x="17" y="37" width="10" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.4"/>
+  <rect x="17" y="40.5" width="6" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.4"/>
+  
+  <!-- Lines on right page (text) -->
+  <rect x="36" y="30" width="10" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.3"/>
+  <rect x="36" y="33.5" width="8" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.3"/>
+  <rect x="36" y="37" width="10" height="1.5" rx="0.75" fill="#1B6B3A" opacity="0.3"/>
+  
+  <!-- Crescent moon above book -->
+  <path d="M32 11 C34.5 11 36.5 13 36.5 15.5 C36.5 18 34.5 20 32 20 C34 18.5 35 17.1 35 15.5 C35 13.9 34 12.5 32 11Z" fill="#C9A84C"/>
+  
+  <!-- Star next to crescent -->
+  <polygon points="40,12 40.8,14.4 43.3,14.4 41.3,15.9 42,18.3 40,16.8 38,18.3 38.7,15.9 36.7,14.4 39.2,14.4" fill="#C9A84C" opacity="0.9"/>
+</svg>

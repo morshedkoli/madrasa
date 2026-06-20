@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <title>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম - ব্যবহারকারী নির্দেশিকা</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+      background-color: #FAF7F0;
+      color: #1a1a2e;
+      -webkit-print-color-adjust: exact;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Print-specific layout */
+    .slide {
+      width: 297mm;
+      height: 210mm;
+      padding: 20mm 25mm 15mm 25mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      background-color: #FAF7F0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+    }
+
+    /* Islamic design pattern overlay */
+    .islamic-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B6B3A' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 10;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Widescreen title page background */
+    .title-slide {
+      background: linear-gradient(135deg, #1B6B3A 0%, #0F4C27 100%);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .title-slide h1 {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 42px;
+      color: #FAF7F0;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .title-slide h2 {
+      font-size: 20px;
+      color: #C9A84C;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+
+    .title-slide .divider {
+      width: 120px;
+      height: 3px;
+      background-color: #C9A84C;
+      margin-bottom: 40px;
+    }
+
+    .title-slide p {
+      font-size: 16px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .title-slide .badge-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .title-slide .badge {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      color: #FAF7F0;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-b: 2px solid rgba(27, 107, 58, 0.1);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .slide-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slide-icon {
+      width: 36px;
+      height: 36px;
+      background-color: rgba(27, 107, 58, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1B6B3A;
+    }
+
+    .slide-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .slide-title {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 26px;
+      color: #1B6B3A;
+      font-weight: 700;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .slide-tag {
+      font-size: 12px;
+      background: rgba(27, 107, 58, 0.08);
+      color: #1B6B3A;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    /* Slide Body Layouts */
+    .slide-body {
+      flex-grow: 1;
+      display: flex;
+      gap: 30px;
+    }
+
+    .col-left {
+      flex: 1;
+    }
+
+    .col-right {
+      flex: 1;
+    }
+
+    /* Typography & Lists */
+    h3 {
+      font-size: 18px;
+      color: #1B6B3A;
+      margin-bottom: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    p.intro {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 15px;
+    }
+
+    ul.feature-list {
+      list-style: none;
+    }
+
+    ul.feature-list li {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 24px;
+      color: #334155;
+    }
+
+    ul.feature-list li::before {
+      content: "•";
+      color: #1B6B3A;
+      font-size: 20px;
+      position: absolute;
+      left: 6px;
+      top: -2px;
+    }
+
+    ul.step-list {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+
+    ul.step-list li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 36px;
+      color: #334155;
+    }
+
+    ul.step-list li::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      background-color: #1B6B3A;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 11px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .highlight-box {
+      background-color: #ffffff;
+      border-left: 4px solid #1B6B3A;
+      padding: 15px;
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 4px 12px rgba(27, 107, 58, 0.03);
+      margin-bottom: 15px;
+    }
+
+    .highlight-box.gold {
+      border-left-color: #C9A84C;
+    }
+
+    .highlight-box.blue {
+      border-left-color: #3b82f6;
+    }
+
+    .highlight-title {
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .highlight-desc {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Cards & Components */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid rgba(27, 107, 58, 0.08);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .card-title {
+      font-weight: bold;
+      color: #1B6B3A;
+      margin-bottom: 8px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Tables */
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+    }
+
+    table.data-table th {
+      background-color: rgba(27, 107, 58, 0.05);
+      color: #1B6B3A;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(27, 107, 58, 0.1);
+    }
+
+    table.data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+    }
+
+    table.data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .badge-status.active {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-status.inactive {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-status.method {
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+
+    /* Diagrams & Mockups */
+    .mockup-container {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .mockup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-b: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+
+    .mockup-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1b6b3a;
+    }
+
+    .mockup-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .mockup-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #cbd5e1;
+    }
+
+    .mockup-dot.red { background-color: #f87171; }
+    .mockup-dot.yellow { background-color: #fbbf24; }
+    .mockup-dot.green { background-color: #4ade80; }
+
+    .mockup-body {
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mockup-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mockup-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .mockup-input {
+      border: 1px solid #cbd5e1;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background-color: #f8fafc;
+      color: #334155;
+    }
+
+    .mockup-btn {
+      background-color: #1b6b3a;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .flow-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .flow-node {
+      background: #ffffff;
+      border: 2px solid #1B6B3A;
+      color: #1B6B3A;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(27,107,58,0.05);
+      width: 80%;
+    }
+
+    .flow-node.accent {
+      border-color: #C9A84C;
+      color: #C9A84C;
+    }
+
+    .flow-arrow {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .code-block {
+      background: #1a1a2e;
+      color: #a5b4fc;
+      font-family: 'Consolas', monospace;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-top: 10px;
+      border-left: 4px solid #C9A84C;
+      white-space: pre-line;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-t: 1px solid rgba(27, 107, 58, 0.08);
+      padding-top: 10px;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .slide-footer-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-footer-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #1B6B3A;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: Title Slide -->
+  <div class="slide title-slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content" style="justify-content: center; align-items: center;">
+      <div style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 44px; height: 44px; color: #FAF7F0;"><path d="m4 6 8-4 8 4v10l-8 4-8-4z"/><path d="M12 2v20"/><path d="M17 11H7"/></svg>
+      </div>
+      <h1>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</h1>
+      <h2>ব্যবহারকারী নির্দেশিকা ও ভূমিকা-ভিত্তিক পরিচালনা নির্দেশিকা</h2>
+      <div class="divider"></div>
+      <p style="font-weight: 600; font-size: 18px;">প্রতিষ্ঠানের প্রশাসনিক ও আর্থিক কাজ সহজীকরণের জন্য একটি সমন্বিত প্ল্যাটফর্ম</p>
+      <p style="margin-top: 10px;">৩টি ডেডিকেটেড পোর্টাল: অ্যাডমিন • শিক্ষক • হিসাবরক্ষক</p>
+      <div class="badge-group">
+        <span class="badge">Next.js 16 App Router</span>
+        <span class="badge">Supabase Auth & RLS</span>
+        <span class="badge">PostgreSQL Database</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2: System Architecture Overview -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">সিস্টেম পরিচিতি ও ডিজাইন দর্শন</div>
+            <div class="slide-subtitle">মাদ্রাসা ম্যানেজমেন্ট সিস্টেমের স্থাপত্য ও প্রধান মডিউলসমূহ</div>
+          </div>
+        </div>
+        <span class="slide-tag">Overview</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>সিস্টেমের প্রধান লক্ষ্য ও উদ্দেশ্য</h3>
+          <p class="intro">এই ডিজিটাল প্ল্যাটফর্মটি প্রাথমিক স্তরের মাদ্রাসাসমূহের জটিল প্রশাসনিক ও আর্থিক কাজগুলোকে সহজ করতে ডিজাইন করা হয়েছে।</p>
+          <ul class="feature-list">
+            <li><strong>প্রশাসনিক সমন্বয়:</strong> অ্যাডমিন প্যানেল থেকে শিক্ষক, ক্লাস, বিষয় ও শিক্ষার্থীদের সম্পূর্ণ নিয়ন্ত্রণ।</li>
+            <li><strong>রিয়েল-টাইম ট্র্যাকিং:</strong> শিক্ষার্থীদের দৈনিক উপস্থিতি এবং পরীক্ষার নম্বর তাৎক্ষণিকভাবে রেকর্ড করার সুবিধা।</li>
+            <li><strong>আর্থিক স্বচ্ছতা:</strong> টিউশন ফি সংগ্রহ, ক্যাশ রসিদ জেনারেশন এবং সামগ্রিক আয়-ব্যয়ের পুঙ্খানুপুঙ্খ বিবরণ।</li>
+            <li><strong>সমন্বিত যোগাযোগ:</strong> রিয়েল-টাইম নোটিশ বোর্ডের মাধ্যমে সকল স্টেকহোল্ডারদের গুরুত্বপূর্ণ ঘোষণা পৌঁছানো।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>৩টি ডেডিকেটেড রোল-ভিত্তিক পোর্টাল</h3>
+          <div class="highlight-box">
+            <div class="highlight-title">১. অ্যাডমিন পোর্টাল (/admin)</div>
+            <div class="highlight-desc">প্রতিষ্ঠান প্রধানের জন্য। শিক্ষার্থীর ফাইল ভর্তি থেকে শুরু করে স্টাফ নিয়োগ, ফি কনফিগারেশন ও সেটিংসের সম্পূর্ণ নিয়ন্ত্রণ।</div>
+          </div>
+          <div class="highlight-box gold">
+            <div class="highlight-title">২. শিক্ষক পোর্টাল (/teacher)</div>
+            <div class="highlight-desc">শিক্ষকদের জন্য। নির্দিষ্ট ক্লাসের শিক্ষার্থীদের উপস্থিতি নেওয়া, বিষয়ের নম্বর ইনপুট এবং নোটিশ বোর্ড দেখার ড্যাশবোর্ড।</div>
+          </div>
+          <div class="highlight-box blue">
+            <div class="highlight-title">৩. হিসাব পোর্টাল (/accounts)</div>
+            <div class="highlight-desc">হিসাবরক্ষকদের জন্য। শিক্ষার্থীদের ফি কালেকশন, রশিদ তৈরি, স্কুলের বেতন ও অন্যান্য খরচ এন্ট্রি এবং অর্থনৈতিক রিপোর্ট ডাউনলোড।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 2 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Admin Overview -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">অ্যাডমিন পোর্টাল: ড্যাশবোর্ড ওভারভিউ</div>
+            <div class="slide-subtitle">প্রতিষ্ঠান প্রধানের রিয়েল-টাইম তথ্য মনিটরিং স্ক্রিন</div>
+          </div>
+        </div>
+        <span class="slide-tag">Administrator</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>ড্যাশবোর্ডের প্রধান উপাদানসমূহ</h3>
+          <p class="intro">লগইন করার পর অ্যাডমিন ড্যাশবোর্ডে সম্পূর্ণ মাদ্রাসার রিয়েল-টাইম ওভারভিউ দেখতে পাবেন।</p>
+          <ul class="feature-list">
+            <li><strong>কুইক অ্যাকশন বোতাম:</strong> এক ক্লিকে "শিক্ষার্থী যোগ করুন", "শিক্ষক নিয়োগ দিন" কিংবা "নোটিশ বোর্ড প্রকাশ করুন" পাতায় যাওয়ার শর্টকাট।</li>
+            <li><strong>পরিসংখ্যান কার্ড:</strong> মোট শিক্ষার্থী সংখ্যা, মোট শিক্ষক সংখ্যা, চলতি মাসের মোট আয় ও মোট ব্যয়ের পরিমাণ।</li>
+            <li><strong>চার্টস ও অ্যানালিটিক্স:</strong> আয় ও ব্যয়ের মাসিক তুলনা চার্ট এবং ক্লাসভিত্তিক শিক্ষার্থীদের দৈনিক উপস্থিতি হার পাই-চার্ট।</li>
+          </ul>
+        </div>
+        <div class="col-right" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                মোট শিক্ষার্থী
+              </div>
+              <div class="card-value">৫০০+</div>
+              <div class="card-desc">সক্রিয় ভর্তি রেকর্ড</div>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+                মোট শিক্ষক
+              </div>
+              <div class="card-value">৩০+</div>
+              <div class="card-desc">অনুমোদিত অ্যাকাডেমিক স্টাফ</div>
+            </div>
+            <div class="card">
+              <div class="card-title" style="color: #065f46;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px; color:#065f46;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                মাসিক আয়
+              </div>
+              <div class="card-value">৳৭৫,০০০</div>
+              <div class="card-desc">চলতি শিক্ষাবর্ষের ফি সংগ্রহ</div>
+            </div>
+            <div class="card">
+              <div class="card-title" style="color: #991b1b;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px; color:#991b1b;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                মাসিক ব্যয়
+              </div>
+              <div class="card-value">৳৫০,০০০</div>
+              <div class="card-desc">বেতন ও রানিং এক্সপেনস</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 3 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Admin Guide - Students -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">অ্যাডমিন গাইড: শিক্ষার্থী ও ক্লাস ব্যবস্থাপনা</div>
+            <div class="slide-subtitle">শিক্ষার্থীর প্রোফাইল তৈরি, ক্লাস বরাদ্দ ও বিষয় সেটআপ</div>
+          </div>
+        </div>
+        <span class="slide-tag">Administrator</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>শিক্ষার্থী ভর্তি ও প্রোফাইল ট্র্যাকিং</h3>
+          <ul class="step-list">
+            <li><strong>শিক্ষার্থী ভর্তি:</strong> অ্যাডমিন প্যানেলের <code>/admin/students</code> পাতা থেকে "শিক্ষার্থী যোগ করুন" বাটনে ক্লিক করে শিক্ষার্থীর নাম, পিতা-মাতার নাম, জন্মতারিখ ও ক্লাস সিলেক্ট করে সাবমিট করুন।</li>
+            <li><strong>শিক্ষার্থীর থ্রি-সিক্সটি ফাইল:</strong> কোনো নির্দিষ্ট শিক্ষার্থীর নামের উপর ক্লিক করলে তার জন্য ডেডিকেটেড প্রোফাইল স্ক্রিন ওপেন হবে। এখানে ৩টি বিভাগ রয়েছে:
+              <br>• <strong>উপস্থিতি রিপোর্ট:</strong> সংশ্লিষ্ট শিক্ষার্থীর সামগ্রিক ও মাসিক উপস্থিতির হার।
+              <br>• <strong>গ্রেডবুক:</strong> সকল পরীক্ষার প্রাপ্ত ফলাফলের তথ্য।
+              <br>• <strong>পেমেন্ট হিস্ট্রি:</strong> পরিশোধিত ও বকেয়া ফি বিবরণী।
+            </li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>ক্লাস ও অ্যাকাডেমিক কারিকুলাম সেটআপ</h3>
+          <ul class="step-list" style="counter-reset: step-counter 2;">
+            <li><strong>ক্লাস ডিরেক্টরি:</strong> <code>/admin/classes</code> থেকে ক্লাস ও নির্দিষ্ট সেকশন তৈরি করুন এবং উক্ত ক্লাসের দায়িত্বপ্রাপ্ত শিক্ষক সিলেক্ট করে সেভ করুন।</li>
+            <li><strong>বিষয় সেটআপ (Subjects Setup):</strong> প্রতিটি ক্লাসের জন্য আলাদা আলাদা বিষয় (যেমন: কুরআন, তাজবিদ, গণিত, আরবী ভাষা) যুক্ত করুন এবং বিষয়ভিত্তিক শিক্ষক নিয়োগ করুন।</li>
+          </ul>
+          <div class="highlight-box" style="margin-top: 15px;">
+            <div class="highlight-title">গুরুত্বপূর্ণ নোটিশ:</div>
+            <div class="highlight-desc">একবার কোনো শিক্ষকের অধীনে ক্লাস বরাদ্দ করা হলে, সংশ্লিষ্ট শিক্ষকের পোর্টালে ড্যাশবোর্ডে সেই ক্লাসের শিক্ষার্থীদের তালিকা ও উপস্থিতি রেজিস্টার স্বয়ংক্রিয়ভাবে চালু হয়ে যাবে।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 4 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Admin Guide - Fee Setup and notices -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">অ্যাডমিন গাইড: ফি কাঠামো ও নোটিশ প্রকাশ</div>
+            <div class="slide-subtitle">বেতন নির্ধারণ ও ভূমিকা-ভিত্তিক বার্তা প্রচার ব্যবস্থাপনা</div>
+          </div>
+        </div>
+        <span class="slide-tag">Administrator</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>ফি কাঠামো সেটআপ (Fee Structure Setup)</h3>
+          <p class="intro">হিসাবরক্ষক বা ক্যাশিয়ার যাতে ফি সংগ্রহ করতে পারেন, তার আগে অ্যাডমিনকে অবশ্যই ফি পলিসি কনফিগার করতে হবে।</p>
+          <ul class="step-list">
+            <li><code>/admin/fees</code> পাতায় যান এবং "ফি কাঠামো তৈরি করুন" বোতামে ক্লিক করুন।</li>
+            <li>নির্দিষ্ট ক্লাস সিলেক্ট করুন এবং ফি-এর ধরণ (যেমন: 'Tuition Fee', 'Admission Fee', 'Exam Fee') ও পরিমাণ (৳) ইনপুট দিয়ে সেভ করুন।</li>
+            <li>সিস্টেমটি প্রতিটি শিক্ষার্থীর ক্লাস অনুযায়ী এই ফি স্ট্রাকচার ম্যাপিং করে তাদের বকেয়া হিসাব ক্যালকুলেট করে।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>নোটিশ বোর্ড ও স্টাফ যোগাযোগ</h3>
+          <p class="intro">সকল স্টাফ অথবা সুনির্দিষ্ট পোর্টালে রিয়েল-টাইম নোটিশ পাঠানোর প্রক্রিয়া:</p>
+          <ul class="step-list" style="counter-reset: step-counter 3;">
+            <li><code>/admin/notices</code> পাতা থেকে "নতুন নোটিশ লিখুন" অপশনে ক্লিক করুন।</li>
+            <li>শিরোনাম (Title) ও নোটিশের বিস্তারিত বিবরণ (Content) লিখুন।</li>
+            <li><strong>অডিয়েন্স ফিল্টার (Audience Filter):</strong> নোটিশের টার্গেট সিলেক্ট করুন:
+              <br>• <code>All Staff (সবাই)</code> - শিক্ষক ও হিসাবরক্ষক উভয়ের জন্য।
+              <br>• <code>Teachers (শিক্ষক)</code> - শুধুমাত্র শিক্ষক পোর্টালে দেখাবে।
+              <br>• <code>Accountants (হিসাবরক্ষক)</code> - শুধুমাত্র হিসাব পোর্টালে দেখাবে।
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 5 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Admin Settings and Backups -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">অ্যাডমিন গাইড: সিস্টেম সেটিংস ও সিকিউরিটি</div>
+            <div class="slide-subtitle">শিক্ষাবর্ষ কনফিগারেশন, অডিট লগের মাধ্যমে ডাটা নিরাপত্তা</div>
+          </div>
+        </div>
+        <span class="slide-tag">Administrator</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>শিক্ষাবর্ষ কনফিগারেশন (Academic Year)</h3>
+          <p class="intro">মাদ্রাসার সকল শিক্ষার্থীর প্রমোশন ও ডেটাবেস আর্কাইভের জন্য শিক্ষাবর্ষ নির্ধারণ অত্যন্ত জরুরি।</p>
+          <ul class="step-list">
+            <li><code>/admin/settings</code> পাতা থেকে বর্তমান শিক্ষাবর্ষ পরিবর্তন বা নতুন শিক্ষাবর্ষ (যেমন: ২০২৬, ২০২৭) সেট করতে পারবেন।</li>
+            <li>কোন শিক্ষাবর্ষকে "সক্রিয় শিক্ষাবর্ষ" সিলেক্ট করলে ক্লাসের নতুন সেশন চালুর সময় ডাটা রি-লোকেশন সম্পন্ন হবে।</li>
+          </ul>
+          <h3>সিস্টেম ডাটা ইউটিলিটি</h3>
+          <ul class="feature-list">
+            <li><strong>ডেমো রিসেট (Seed Demo Data):</strong> অ্যাডমিন চাইলে পরীক্ষামূলক অনুশীলনের জন্য প্রজেক্টের ডেমো ডাটা রিসেট বা রিস্টোর করতে পারবেন।</li>
+            <li><strong>ডাটা এক্সপোর্ট:</strong> সকল তালিকা সহজে প্রিন্ট এবং সংরক্ষণ করা যায়।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>অ্যাক্টিভিটি লগ ও নিরাপত্তা (Security Logs)</h3>
+          <p class="intro">মাদ্রাসার অত্যন্ত স্পর্শকাতর তথ্যসমূহ সুরক্ষার জন্য ডাটাবেস নিরাপত্তা এবং অডিট ট্র্যাকিং ব্যবস্থা নিম্নরূপ:</p>
+          <div class="highlight-box blue">
+            <div class="highlight-title">স্টাফ অ্যাক্টিভিটি লগ (Activity Log)</div>
+            <div class="highlight-desc">কোন ইউজার কখন কোন অ্যাকশনটি সম্পন্ন করলেন (যেমন: "গ্রেড আপডেট", "নতুন খরচ এন্ট্রি") তা সিস্টেমের <code>activity_logs</code> টেবিলে স্বয়ংক্রিয়ভাবে অডিটের জন্য জমা থাকে।</div>
+          </div>
+          <div class="highlight-box">
+            <div class="highlight-title">রো লেভেল সিকিউরিটি (RLS Policy)</div>
+            <div class="highlight-desc">Supabase PostgreSQL-এ RLS পলিসি কার্যকর থাকায় একজন শিক্ষক শুধুমাত্র তার ক্লাসের ডাটা দেখতে পারেন। হিসাবের ডাটা শুধুমাত্র এডমিন ও হিসাবরক্ষক ছাড়া অন্য কারোর অ্যাক্সেস করার কোনো সুযোগ নেই।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 6 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Teacher Overview -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">শিক্ষক পোর্টাল: ড্যাশবোর্ড ও ওভারভিউ</div>
+            <div class="slide-subtitle">শিক্ষকদের জন্য দৈনিক ক্লাসরুম অ্যাক্টিভিটি স্ক্রিন</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(201, 168, 76, 0.15); color: #C9A84C;">Teacher</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>ড্যাশবোর্ডের প্রধান ফিচারসমূহ</h3>
+          <p class="intro">শিক্ষক হিসেবে সিস্টেমে সাইন ইন করার পর একটি ক্লিন ও রিচ ইন্টারফেস ওপেন হবে।</p>
+          <ul class="feature-list">
+            <li><strong>নোটিশ বোর্ড:</strong> মাদ্রাসার নোটিশ বোর্ডের সকল নোটিশ সবার প্রথমে ড্যাশবোর্ডে হাইলাইট করা থাকে।</li>
+            <li><strong>আপনার ক্লাসসমূহ:</strong> শিক্ষকের অধীনস্থ ক্লাস এবং ক্লাসে বরাদ্দকৃত বিষয়ের সরাসরি তালিকা দেখা যাবে।</li>
+            <li><strong>রোল-বেসড মেনুবার:</strong> বামপাশের সাইডবার মেনু থেকে শিক্ষক খুব সহজে ৩টি প্রধান কাজে নেভিগেট করতে পারবেন:
+              <br>• <strong>উপস্থিতি চিহ্নিত করুন:</strong> দৈনিক হাজির খাতা।
+              <br>• <strong>গ্রেডবুক এন্ট্রি:</strong> পরীক্ষার পরীক্ষার নম্বর ইনপুট।
+              <br>• <strong>শিক্ষার্থী তালিকা:</strong> ক্লাসের শিক্ষার্থীদের প্রোফাইল রিড-অনলি অ্যাক্সেস।
+            </li>
+          </ul>
+        </div>
+        <div class="col-right" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="mockup-container">
+            <div class="mockup-header">
+              <div class="mockup-dots"><span class="mockup-dot red"></span><span class="mockup-dot yellow"></span><span class="mockup-dot green"></span></div>
+              <span class="mockup-title">শিক্ষক ড্যাশবোর্ড মেনু</span>
+            </div>
+            <div class="mockup-body">
+              <div style="background-color:rgba(201, 168, 76, 0.08); padding: 10px; border-radius: 8px; border: 1px solid rgba(201, 168, 76, 0.15);">
+                <div style="font-weight:700; font-size:12px; color:#C9A84C; margin-bottom: 4px;">আজকের নোটিশ:</div>
+                <div style="font-size:11px; color:#555;">"আগামীকাল বার্ষিক ক্রীড়া প্রতিযোগিতা অনুষ্ঠিত হবে। সকল শিক্ষক সকাল ৮টার মধ্যে উপস্থিত থাকুন।"</div>
+              </div>
+              <div class="card" style="padding:10px;">
+                <div class="card-title" style="color:#C9A84C; font-size:12px; margin-bottom:4px;">শ্রেণি শিক্ষকতা:</div>
+                <div style="font-weight:700;">Class 1 - Section A</div>
+                <div style="font-size:11px; color:#888;">মোট শিক্ষার্থী: ২৫ জন</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 7 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Teacher Guide - Attendance -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon" style="background: rgba(201, 168, 76, 0.15); color: #C9A84C;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 10 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">শিক্ষক গাইড: দৈনিক উপস্থিতি চিহ্নিতকরণ</div>
+            <div class="slide-subtitle">শিক্ষার্থীর দৈনিক ক্লাসে উপস্থিতি রেকর্ড এবং লক পলিসি</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(201, 168, 76, 0.15); color: #C9A84C;">Teacher</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>হাজিরা খাতা ব্যবহার করার নিয়ম</h3>
+          <p class="intro">সহজ ৪টি ধাপে উপস্থিতি রেকর্ড করুন:</p>
+          <ul class="step-list">
+            <li>মেনু থেকে <strong>উপস্থিতি চিহ্নিত করুন</strong> লিংকে ক্লিক করুন।</li>
+            <li>উপরে থাকা ড্রপডাউন অপশন থেকে আপনার <strong>শ্রেণি</strong> সিলেক্ট করুন। (তারিখ হিসেবে আজকের দিনটি স্বয়ংক্রিয়ভাবে লক করা থাকবে)।</li>
+            <li>নিচের টেবিলে শিক্ষার্থীদের নামের পাশে থাকা বাটনগুলো থেকে সঠিক স্ট্যাটাস চিহ্নিত করুন:
+              <br>• <span style="color:#065f46; font-weight:700;">উপস্থিত (Present)</span> - সবুজ বাটন
+              <br>• <span style="color:#991b1b; font-weight:700;">অনুপস্থিত (Absent)</span> - লাল বাটন
+              <br>• <span style="color:#854d0e; font-weight:700;">বিলম্বে (Late)</span> - হলুদ বাটন
+            </li>
+            <li>টেবিলের নিচের দিকে স্ক্রল করে <strong>"উপস্থিতি সংরক্ষণ"</strong> বাটনে ক্লিক করে সেভ করুন।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>নিরাপত্তা ও ডাটা লক পলিসি</h3>
+          <div class="highlight-box gold" style="margin-top:20px;">
+            <div class="highlight-title">উপস্থিতি লক রুল (Attendance Lock Rule)</div>
+            <div class="highlight-desc">প্রতিদিনের ক্লাসের উপস্থিতি ডেটার নির্ভরযোগ্যতা নিশ্চিত করার জন্য, একবার উপস্থিতি সেভ করা হয়ে গেলে উক্ত ক্লাসের সেদিনের রোল সিটটি <strong>"লক করা হয়েছে (Locked)"</strong> দেখাবে। শিক্ষকেরা ডাটা এন্ট্রি ভুল করলে পরবর্তীতে সেটি রি-রাইট করতে পারবেন না। ডাটা পরিবর্তন করতে হলে অবশ্যই ড্যাশবোর্ড থেকে এডমিনের সাথে যোগাযোগ করতে হবে।</div>
+          </div>
+          <div class="highlight-box">
+            <div class="highlight-title">ডাটা তাৎক্ষণিক সিংক্রোনাইজেশন</div>
+            <div class="highlight-desc">শিক্ষক ডাটা সেভ করার সাথে সাথেই অ্যাডমিন ড্যাশবোর্ডের মোট উপস্থিতির পাই-চার্ট আপডেট হয়ে যাবে এবং উক্ত শিক্ষার্থীর ব্যক্তিগত প্রোফাইলে হাজিরার হিসাব যোগ হবে।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 8 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Teacher Guide - Gradebook -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon" style="background: rgba(201, 168, 76, 0.15); color: #C9A84C;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">শিক্ষক গাইড: গ্রেডবুক ও পরীক্ষার নম্বর ইনপুট</div>
+            <div class="slide-subtitle">বিষয়ভিত্তিক পরীক্ষার ফলাফল এন্ট্রি ও সেভ করার নিয়ম</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(201, 168, 76, 0.15); color: #C9A84C;">Teacher</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>নম্বর এন্ট্রি প্রক্রিয়া</h3>
+          <p class="intro">গ্রেডবুকে শিক্ষার্থীদের বিষয়ের নম্বর সংরক্ষণ করার ধাপসমূহ:</p>
+          <ul class="step-list">
+            <li>মেনু থেকে <strong>"গ্রেড দিন"</strong> পাতায় যান।</li>
+            <li>ড্রপডাউন থেকে নির্দিষ্ট <strong>শ্রেণি</strong> এবং আপনার বরাদ্দকৃত <strong>বিষয়</strong> (Subject) নির্বাচন করুন।</li>
+            <li>পরের ড্রপডাউন থেকে পরীক্ষার ধরণ নির্বাচন করুন:
+              <br>• <strong>মাসিক পরীক্ষা (Monthly Test)</strong>
+              <br>• <strong>অর্ধবার্ষিক পরীক্ষা (Half-yearly)</strong>
+              <br>• <strong>বার্ষিক পরীক্ষা (Annual)</strong>
+            </li>
+            <li>টেবিলে শিক্ষার্থীদের নামের পাশে থাকা টেক্সট বক্সে ১০০ এর মধ্যে প্রাপ্ত নম্বর লিখুন এবং ডানপাশের <strong>"সংরক্ষণ"</strong> বোতামে ক্লিক করুন।</li>
+          </ul>
+        </div>
+        <div class="col-right" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="mockup-container">
+            <div class="mockup-header">
+              <div class="mockup-dots"><span class="mockup-dot red"></span><span class="mockup-dot yellow"></span><span class="mockup-dot green"></span></div>
+              <span class="mockup-title">নম্বর এন্ট্রি স্ক্রিন</span>
+            </div>
+            <div class="mockup-body" style="gap:5px;">
+              <table class="data-table" style="font-size:11px; margin-top:0;">
+                <thead>
+                  <tr><th>শিক্ষার্থী</th><th>প্রাপ্ত নম্বর (১০০)</th><th>অ্যাকশন</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>আব্দুর রহমান</td><td><input type="number" value="৮৫" class="mockup-input" style="width:50px; padding:2px 4px; font-size:11px; font-family:'Inter'; text-align:center;"></td><td><span class="badge-status active" style="font-size:10px; cursor:default; padding: 2px 6px;">সংরক্ষিত</span></td></tr>
+                  <tr><td>মোঃ আব্দুল্লাহ</td><td><input type="number" value="৯২" class="mockup-input" style="width:50px; padding:2px 4px; font-size:11px; font-family:'Inter'; text-align:center;"></td><td><span class="badge-status active" style="font-size:10px; cursor:default; padding: 2px 6px;">সংরক্ষিত</span></td></tr>
+                </tbody>
+              </table>
+              <div style="font-size:11px; color:#64748b; margin-top:8px; line-height:1.4;">
+                <strong>টাকা ও ফলাফলের সম্পর্ক:</strong> বকেয়া ফি পরিশোধিত না হলেও শিক্ষক পরীক্ষার নম্বর ইনপুট করতে পারবেন, তবে রিপোর্ট কার্ড অ্যাডমিন কর্তৃক কাস্টম লক করার সুবিধা রয়েছে।
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 9 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: Accountant Overview -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">হিসাব পোর্টাল: ড্যাশবোর্ড ও ক্যাশফ্লো</div>
+            <div class="slide-subtitle">মাদ্রাসার দৈনিক অর্থনৈতিক ড্যাশবোর্ড ও রিয়েল-টাইম ব্যালেন্স</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">Accountant</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>অর্থনৈতিক ড্যাশবোর্ডের কাজ</h3>
+          <p class="intro">হিসাবরক্ষক সাইন ইন করলে সরাসরি ক্যাশ ব্যালেন্সের ড্যাশবোর্ড ওপেন হবে:</p>
+          <ul class="feature-list">
+            <li><strong>তহবিল ট্র্যাকিং (Net Balance):</strong> মাদ্রাসার সর্বমোট সংগৃহীত আয় থেকে সকল অনুমোদিত ব্যয়ের পরিমাণ বিয়োগ করে সিস্টেমে বর্তমান সচল ফান্ডের ব্যালেন্স প্রদর্শন করে।</li>
+            <li><strong>কুইক অ্যাকশন নেভিগেশন:</strong>
+              <br>• <strong>ফি সংগ্রহ:</strong> শিক্ষার্থীদের থেকে পেমেন্ট গ্রহণের পেইজ।
+              <br>• <strong>আয় যোগ করুন:</strong> অন্যান্য সোর্স যেমন অনুদান জমার পেইজ।
+              <br>• <strong>ব্যয় যোগ করুন:</strong> বেতন ও ইউটিলিটি খরচ পোস্টিং।
+            </li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>রিয়েল-টাইম লেনদেন লেজার (Cash Flow Ledger)</h3>
+          <p class="intro">ড্যাশবোর্ডের নিচে একটি ডায়নামিক ট্রানজেকশন গ্রিড রয়েছে, যেখানে প্রতিটি ইনপুট করা লেনদেন ও ফি আদায়ের বিবরণ রশিদ সহ ট্র্যাক হয়।</p>
+          <div class="card" style="border-left: 4px solid #3b82f6;">
+            <div style="font-weight:700; margin-bottom:5px;">হিসাবরক্ষকের কুইক শর্টকাট লিংক সমূহ:</div>
+            <div style="font-size:13px; color:#475569; display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; margin-top:8px;">
+              <span style="background:#f1f5f9; padding:5px 8px; border-radius:4px;">৳ ফি আদায়ের জন্য: <code>/accounts/fees</code></span>
+              <span style="background:#f1f5f9; padding:5px 8px; border-radius:4px;">💸 খরচ লিপিবদ্ধ: <code>/accounts/expenses</code></span>
+              <span style="background:#f1f5f9; padding:5px 8px; border-radius:4px;">📈 অনুদান আদায়: <code>/accounts/income</code></span>
+              <span style="background:#f1f5f9; padding:5px 8px; border-radius:4px;">📊 আর্থিক স্টেটমেন্ট: <code>/accounts/reports</code></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 10 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 11: Accountant Guide - Fee Collection -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H9H8"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">হিসাব গাইড: ফি সংগ্রহ ও রশিদ তৈরি</div>
+            <div class="slide-subtitle">শিক্ষার্থীর বকেয়া চেক করা, ফি সংগ্রহ ও রশিদ প্রিন্ট প্রক্রিয়া</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">Accountant</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>ফি আদায় ও রসিদ তৈরির নিয়ম</h3>
+          <p class="intro">অভিভাবক ফি দিতে আসলে নিম্নোক্ত পদ্ধতি অনুসরণ করুন:</p>
+          <ul class="step-list">
+            <li>মেনু থেকে <strong>"ফি সংগ্রহ"</strong> পাতায় যান।</li>
+            <li>বামপাশের সার্চ বক্সে শিক্ষার্থীর নাম লিখে টাইপ করুন এবং তালিকায় নাম দেখা গেলে নামের উপর ক্লিক করুন।</li>
+            <li>ডানপাশে শিক্ষার্থীর মোট ফি, মোট পরিশোধিত এবং বকেয়া ব্যালেন্সের বিবরণ অটোমেটিক লোড হবে।</li>
+            <li>বকেয়া কালেকশনের জন্য <strong>"পেমেন্ট রেকর্ড করুন"</strong> বোতামে ক্লিক করুন।</li>
+            <li>পপ-আপ বক্সে ফি-এর ধরন, সংগৃহীত টাকার পরিমাণ, পেমেন্ট মাধ্যম (নগদ, ব্যাংক অথবা বিকাশ) এবং মন্তব্য লিখে "পেমেন্ট রেকর্ড করুন" সাবমিট করুন।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>স্বয়ংক্রিয় ইউনিক রসিদ নম্বর</h3>
+          <p class="intro">লেনদেনটি সাবমিট করার সাথে সাথেই সিস্টেম একটি <code>Unique Receipt Number</code> (যেমন: <code>REC-171887-XXXX</code>) তৈরি করে ট্রানজেকশন টেবিলে ডেটা অ্যাড করবে।</p>
+          <div class="card">
+            <div style="font-weight:700; font-size:13px; color:#3b82f6; margin-bottom:8px; border-bottom:1px dashed #ddd; padding-bottom:5px; display:flex; justify-content:space-between;">
+              <span>পেমেন্ট রশিদ নমুনা</span>
+              <span style="font-family:'Inter'; font-size:11px;">REC-20260601</span>
+            </div>
+            <div style="font-size:12px; display:flex; flex-direction:column; gap:4px; color:#475569;">
+              <div>শিক্ষার্থী: আব্দুর রহমান (শ্রেণি: ১)</div>
+              <div>পেমেন্ট ধরণ: Tuition Fee</div>
+              <div>পরিশোধিত পরিমাণ: ৳৫০০ (নগদ)</div>
+              <div style="font-weight:700; border-top:1px solid #eee; padding-top:4px; margin-top:4px; text-align:right;">আদায়কারী: হিসাবরক্ষক</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 11 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 12: Accountant Guide - expenses and income -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">হিসাব গাইড: আয়-ব্যয় এবং আর্থিক প্রতিবেদন</div>
+            <div class="slide-subtitle">অন্যান্য আয়, মাদ্রাসার মাসিক খরচ পোস্টিং ও প্রতিবেদন ডাউনলোড</div>
+          </div>
+        </div>
+        <span class="slide-tag" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">Accountant</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>অন্যান্য আয় ও ব্যয় এন্ট্রি</h3>
+          <ul class="step-list">
+            <li><strong>আয় পোস্টিং (Income page):</strong> <code>/accounts/income</code> পাতা থেকে প্রতিষ্ঠানের বাহ্যিক অনুদান বা সরকারি ফান্ডের আয়গুলো তারিখ ও উৎস উল্লেখ করে লিপিবদ্ধ করতে পারবেন।</li>
+            <li><strong>খরচ পোস্টিং (Expenses page):</strong> <code>/accounts/expenses</code> পাতা থেকে প্রতিষ্ঠানের সকল খরচ (যেমন: বেতন, ইউটিলিটি বিদ্যুৎ বিল, ভবন রক্ষণাবেক্ষণ খরচ, বইপত্র ক্রয়) বিবরণ, ক্যাটাগরি ও টাকার পরিমাণ দিয়ে এন্ট্রি করবেন।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>লাভ-ক্ষতি ও প্রতিবেদন জেনারেশন (Reports)</h3>
+          <p class="intro"><code>/accounts/reports</code> পাতায় গেলে হিসাবরক্ষক ও অ্যাডমিন রিয়েল-টাইম বার্ষিক ও মাসিক আর্থিক হিসাব বিশ্লেষণ করতে পারবেন:</p>
+          <ul class="feature-list">
+            <li><strong>পিএন্ডএল বিবরণী (P&L Summary):</strong> বছরের মোট আয় ও মোট খরচের তুলনামূলক গ্রাফ এবং নেট ব্যালেন্স প্রদর্শন।</li>
+            <li><strong>শ্রেণিভিত্তিক ফি সংগ্রহ চার্ট:</strong> প্রতিটি ক্লাসের শিক্ষার্থীদের থেকে অর্জিত মোট ফির পরিমাণ।</li>
+            <li><strong>রিপোর্ট ডাউনলোড বোতাম:</strong> এক ক্লিকে সম্পূর্ণ হিসাবের <strong>"পিডিএফ এক্সপোর্ট (PDF)"</strong> এবং <strong>"এক্সেল এক্সপোর্ট (Excel)"</strong> করার সুবিধা।</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 12 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 13: Technical Architecture and Security -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">প্রযুক্তিগত ডিজাইন ও নিরাপত্তা কাঠামো</div>
+            <div class="slide-subtitle">সিস্টেম আর্কিটেকচার, ডেটাবেস এবং ভূমিকাভিত্তিক রাউট সিকিউরিটি</div>
+          </div>
+        </div>
+        <span class="slide-tag">Architecture</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>ডেটাবেস স্কিমা ডিজাইন ও সিকিউরিটি</h3>
+          <p class="intro">ডাটাবেসের রিলেশনাল ডিজাইন এবং RLS পলিসির মাধ্যমে ডেটা সুরক্ষার বিবরণ:</p>
+          <ul class="feature-list">
+            <li><strong>সেন্ট্রাল রিলেশনস:</strong> <code>profiles</code> ও <code>auth.users</code> টেবিলের সুদৃঢ় ইন্টিগ্রেশন। সকল শিক্ষার্থীর রেকর্ড <code>classes</code> এবং <code>fee_payments</code> এর সাথে ক্যাসকেডিং ফরেন কি (Foreign Keys) দ্বারা যুক্ত।</li>
+            <li><strong>নিরাপত্তা পলিসি (Row Level Security - RLS):</strong>
+              <br>• শিক্ষক নিজ ক্লাসের বাইরে কোনো শিক্ষার্থীর ফাইল বা উপস্থিতি দেখতে/সম্পাদনা করতে পারেন না।
+              <br>• অন্যান্য স্টাফদের আয়-ব্যয়ের আর্থিক ডেটা অ্যাক্সেস ব্লক করা আছে।
+            </li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>সার্ভার সাইড প্রক্সি মিডলওয়্যার (Proxy Middleware)</h3>
+          <div class="highlight-box">
+            <div class="highlight-title">src/proxy.ts মিডলওয়্যার কন্ট্রোল</div>
+            <div class="highlight-desc">প্রতিটি HTTP রিকোয়েস্ট আসার আগে ব্যবহারকারীর রোল যাচাই করে। অননুমোদিত ইউজার বা লগইন ছাড়া কেউ সরাসরি কোনো পোর্টালে (যেমন: <code>/admin/*</code>) প্রবেশের চেষ্টা করলে তাকে স্বয়ংক্রিয়ভাবে রিডাইরেক্ট করে <code>/auth/login</code> পেজে পাঠিয়ে দেয়।</div>
+          </div>
+          <div class="highlight-box gold">
+            <div class="highlight-title">অ্যাসিঙ্ক কুকিজ ও প্যারামিটার্স (Next.js 16)</div>
+            <div class="highlight-desc">সিস্টেমটি Next.js 16-এর নতুন নিয়ম কঠোরভাবে মেনে চলে। রাউট কন্ট্রোল ও কুকিজ রিড করার সময় প্রমিস রিকোয়েস্টগুলোকে যথাযথভাবে <code>await</code> ব্যবহার করে প্রসেস করা হয়।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 13 of 14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 14: Setup and Login Credentials -->
+  <div class="slide">
+    <div class="islamic-bg"></div>
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-title-area">
+          <div class="slide-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="slide-title">সিস্টেম অ্যাক্সেস ও ডেমো অ্যাকাউন্টস</div>
+            <div class="slide-subtitle">পরীক্ষামূলক ব্যবহারের জন্য তৈরি করা ডেমো ক্রেডেনশিয়ালস</div>
+          </div>
+        </div>
+        <span class="slide-tag">Access</span>
+      </div>
+      
+      <div class="slide-body">
+        <div class="col-left">
+          <h3>লোকাল রান ও ডেভেলপমেন্ট পদ্ধতি</h3>
+          <p class="intro">প্রজেক্টটি রান করার জন্য সাধারণ কমান্ডসমূহ:</p>
+          <ul class="step-list">
+            <li>প্রথমে ডিরেক্টরিতে যান এবং ডিপেন্ডেন্সি ইনস্টল করার পর <code>npm run dev</code> কমান্ডটি রান করুন।</li>
+            <li>ব্রাউজারে <code>http://localhost:3000</code> ইউআরএলটি ওপেন করুন।</li>
+            <li>প্রধান ল্যান্ডিং পেজের ডান কোণায় থাকা <strong>"স্টাফ লগইন"</strong> বাটনে ক্লিক করুন।</li>
+            <li>ডানপাশের ডেমো ইমেইল ও পাসওয়ার্ড ব্যবহার করে সাইন ইন করুন।</li>
+          </ul>
+        </div>
+        <div class="col-right">
+          <h3>ডেমো লগইন তথ্য (Credentials Table)</h3>
+          <p class="intro">সহজে পরীক্ষা করার জন্য ৩টি পোর্টালে ব্যবহারের ডেমো অ্যাকাউন্ট:</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>রোল / পোর্টাল</th>
+                <th>ইমেইল অ্যাকাউন্ট (Email)</th>
+                <th>পাসওয়ার্ড (Password)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>প্রশাসক (Admin)</strong></td>
+                <td><code>admin@madrasa.com</code></td>
+                <td><code>password123</code></td>
+              </tr>
+              <tr>
+                <td><strong>শিক্ষক (Teacher)</strong></td>
+                <td><code>teacher@madrasa.com</code></td>
+                <td><code>password123</code></td>
+              </tr>
+              <tr>
+                <td><strong>হিসাবরক্ষক (Accountant)</strong></td>
+                <td><code>accounts@madrasa.com</code></td>
+                <td><code>password123</code></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="highlight-box gold" style="margin-top: 15px; padding: 10px;">
+            <div class="highlight-desc" style="font-size:12px;"><strong>সতর্কতা:</strong> ডেমো অ্যাকাউন্টগুলো শুধুমাত্র উন্নয়ন ও পরীক্ষার কাজের জন্য কনফিগার করা হয়েছে। প্রোডাকশনে ব্যবহারের আগে পাসওয়ার্ড ও ইমেইল এড্রেস সুনির্দিষ্টভাবে পরিবর্তন করতে হবে।</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide-footer">
+        <div class="slide-footer-left"><span>মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</span><div class="slide-footer-dot"></div><span>ব্যবহারকারী নির্দেশিকা</span></div>
+        <div>Page 14 of 14</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
