@@ -302,7 +302,7 @@ export default async function HomePage() {
               }}
             >
               <span className="relative inline-block" style={{ color: '#1B6B3A' }}>
-                {branding.hero_title}
+                {branding.name}
                 <svg
                   className="absolute -bottom-2 left-0 w-full"
                   viewBox="0 0 200 8"
