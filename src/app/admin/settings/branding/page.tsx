@@ -384,7 +384,7 @@ export default function BrandingPage() {
           <SectionCard icon={School} title="পরিচয় তথ্য" subtitle="নেভিগেশন বার ও ফুটারে প্রদর্শিত হবে">
             <div className="grid sm:grid-cols-2 gap-5">
               <Field label="মাদ্রাসার নাম" hint="নেভিগেশন বার ও হিরো কার্ডে দেখাবে">
-                <StyledInput value={form.name} onChange={set('name')} placeholder="যেমন: দারুল উলুম মাদ্রাসা" />
+                <StyledInput value={form.name} onChange={set('name')} placeholder="যেমন: জামিয়া ইসলামিয়া সিরাজুল উলূম সূর্যকান্দি" />
               </Field>
               <Field label="ট্যাগলাইন" hint="নামের নিচে ছোট বিবরণ">
                 <StyledInput value={form.tagline} onChange={set('tagline')} placeholder="যেমন: ডিজিটাল শিক্ষা ব্যবস্থাপনা" />

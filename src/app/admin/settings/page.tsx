@@ -8,10 +8,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Modal } from '@/components/shared/Modal'
-import { Plus, Check, Palette, ArrowRight } from 'lucide-react'
+import { Plus, Check, Palette, ArrowRight, Save, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import type { AcademicYear, Profile } from '@/lib/types'
+
+const DEFAULT_MADRASA = 'জামিয়া ইসলামিয়া সিরাজুল উলূম সূর্যকান্দি'
 
 export default function SettingsPage() {
   const [academicYears, setAcademicYears] = useState<AcademicYear[]>([])
@@ -21,7 +23,58 @@ export default function SettingsPage() {
   const [yearForm, setYearForm] = useState({ name: '', start_date: '', end_date: '' })
   const [userForm, setUserForm] = useState({ email: '', password: '', full_name: '', role: 'teacher' })
 
-  useEffect(() => { loadData() }, [])
+  // Madrasa info state
+  const [madrasaInfo, setMadrasaInfo] = useState({
+    name: DEFAULT_MADRASA,
+    tagline: 'ডিজিটাল শিক্ষা ব্যবস্থাপনা',
+    address: '',
+    phone: '',
+    email: '',
+    office_hours: '',
+  })
+  const [savingInfo, setSavingInfo] = useState(false)
+
+  useEffect(() => {
+    loadData()
+    loadMadrasaInfo()
+  }, [])
+
+  async function loadMadrasaInfo() {
+    try {
+      const res = await fetch('/api/branding')
+      if (res.ok) {
+        const data = await res.json()
+        setMadrasaInfo({
+          name: data.name || DEFAULT_MADRASA,
+          tagline: data.tagline || 'ডিজিটাল শিক্ষা ব্যবস্থাপনা',
+          address: data.address || '',
+          phone: data.phone || '',
+          email: data.email || '',
+          office_hours: data.office_hours || '',
+        })
+      }
+    } catch {}
+  }
+
+  async function saveMadrasaInfo() {
+    setSavingInfo(true)
+    try {
+      // Load full current branding first so we don’t overwrite other fields
+      const getRes = await fetch('/api/branding')
+      const current = getRes.ok ? await getRes.json() : {}
+      const res = await fetch('/api/branding', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...current, ...madrasaInfo }),
+      })
+      if (!res.ok) throw new Error('সংরক্ষণ ব্যর্থ হয়েছে')
+      toast.success('মাদ্রাসার তথ্য সফলভাবে সংরক্ষিত হয়েছে! হোম পেজ আপডেট হয়েছে।')
+    } catch (e: any) {
+      toast.error(e.message)
+    } finally {
+      setSavingInfo(false)
+    }
+  }
 
   async function loadData() {
     const [yRes, uRes] = await Promise.all([
@@ -71,13 +124,13 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="সেটিংস" description="স্কুল প্রোফাইল ও সিস্টেম সেটিংস" />
+      <PageHeader title="সেটিংস" description="মাদ্রাসার তথ্য ও সিস্টেম সেটিংস" />
 
       <Tabs defaultValue="academic-years">
         <TabsList>
           <TabsTrigger value="academic-years">শিক্ষাবর্ষ</TabsTrigger>
           <TabsTrigger value="users">ব্যবহারকারী ব্যবস্থাপনা</TabsTrigger>
-          <TabsTrigger value="school">স্কুল প্রোফাইল</TabsTrigger>
+          <TabsTrigger value="school">মাদ্রাসার তথ্য</TabsTrigger>
           <TabsTrigger value="branding">ব্র্যান্ডিং</TabsTrigger>
         </TabsList>
 
@@ -136,15 +189,88 @@ export default function SettingsPage() {
 
         <TabsContent value="school">
           <Card>
-            <CardHeader><CardTitle>স্কুলের তথ্য</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2"><label className="text-sm font-medium">স্কুলের নাম</label><Input defaultValue="Madrasa Management System" /></div>
-                <div className="space-y-2"><label className="text-sm font-medium">ঠিকানা</label><Input defaultValue="123 Islamic Street" /></div>
-                <div className="space-y-2"><label className="text-sm font-medium">ফোন</label><Input defaultValue="+880-XXX-XXXXXX" /></div>
-                <div className="space-y-2"><label className="text-sm font-medium">ইমেইল</label><Input defaultValue="info@madrasa.edu" /></div>
+            <CardHeader>
+              <CardTitle>মাদ্রাসার তথ্য</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <p className="text-sm text-gray-500">
+                মাদ্রাসার মূল তথ্য সম্পাদনা করুন — হোম পেজে সরাসরি প্রদর্শিত হবে।
+              </p>
+
+              {/* Madrasa Name — prominent */}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">মাদ্রাসার পূর্ণ নাম</label>
+                <Input
+                  value={madrasaInfo.name}
+                  onChange={(e) => setMadrasaInfo({ ...madrasaInfo, name: e.target.value })}
+                  placeholder="মাদ্রাসার পূর্ণ নাম বাংলায় লিখুন"
+                  className="text-base font-semibold h-11"
+                />
+                <p className="text-xs text-gray-400">নাভিগেশন বার, হিরো সেকশন, কার্ড ও ফুটারে প্রদর্শিত হবে।</p>
               </div>
-              <Button>সেটিংস সংরক্ষণ</Button>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">ট্যাগলাইন</label>
+                  <Input
+                    value={madrasaInfo.tagline}
+                    onChange={(e) => setMadrasaInfo({ ...madrasaInfo, tagline: e.target.value })}
+                    placeholder="যেমন: ডিজিটাল শিক্ষা ব্যবস্থাপনা"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">ঠিকানা</label>
+                  <Input
+                    value={madrasaInfo.address}
+                    onChange={(e) => setMadrasaInfo({ ...madrasaInfo, address: e.target.value })}
+                    placeholder="যেমন: সূর্যকান্দি, ব্রাহ্মণবাডিয়া"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">ফোন নম্বর</label>
+                  <Input
+                    value={madrasaInfo.phone}
+                    onChange={(e) => setMadrasaInfo({ ...madrasaInfo, phone: e.target.value })}
+                    placeholder="+৮৮০-XXXX-XXXXXX"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">ইমেইল</label>
+                  <Input
+                    value={madrasaInfo.email}
+                    onChange={(e) => setMadrasaInfo({ ...madrasaInfo, email: e.target.value })}
+                    placeholder="info@madrasa.edu"
+                    type="email"
+                  />
+                </div>
+                <div className="space-y-2 col-span-2">
+                  <label className="text-sm font-medium text-gray-700">কার্যালয়ের সময়সূচি</label>
+                  <Input
+                    value={madrasaInfo.office_hours}
+                    onChange={(e) => setMadrasaInfo({ ...madrasaInfo, office_hours: e.target.value })}
+                    placeholder="যেমন: শনি-বৃহস্পতি ৮:০০-২:০০"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <Button
+                  onClick={saveMadrasaInfo}
+                  disabled={savingInfo}
+                  className="flex items-center gap-2"
+                  style={{ background: 'linear-gradient(135deg, #1B6B3A, #0f4c27)' }}
+                >
+                  {savingInfo ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  {savingInfo ? 'সংরক্ষণ হচ্ছে...' : 'সংরক্ষণ করুন'}
+                </Button>
+                <Link href="/admin/settings/branding">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <Palette className="w-4 h-4" />
+                    সম্পূর্ণ ব্র্যান্ডিং সেটিংস
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

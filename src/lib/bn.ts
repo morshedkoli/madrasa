@@ -56,7 +56,7 @@ export const bn = {
   notice: { manage: 'নোটিশ', post: 'নোটিশ পোস্ট করুন', target: 'লক্ষ্য দর্শক', all: 'সবাই' },
   settings: {
     title: 'সেটিংস', academicYear: 'শিক্ষাবর্ষ', userManagement: 'ব্যবহারকারী ব্যবস্থাপনা',
-    schoolProfile: 'স্কুল প্রোফাইল', createUser: 'ব্যবহারকারী তৈরি করুন', resetPassword: 'পাসওয়ার্ড রিসেট',
+    schoolProfile: 'মাদ্রাসার তথ্য', createUser: 'ব্যবহারকারী তৈরি করুন', resetPassword: 'পাসওয়ার্ড রিসেট',
   },
   report: {
     title: 'প্রতিবেদন', pnl: 'আয়-ব্যয় বিবরণী', feeCollection: 'ফি সংগ্রহ প্রতিবেদন',

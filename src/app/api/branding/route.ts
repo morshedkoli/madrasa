@@ -3,7 +3,7 @@ import { sql } from '@/lib/db-server'
 
 // ─── Default branding ─────────────────────────────────────────────────────────
 export const defaultBranding = {
-  name: 'মাদ্রাসা ম্যানেজমেন্ট',
+  name: 'জামিয়া ইসলামিয়া সিরাজুল উলূম সূর্যকান্দি',
   tagline: 'ডিজিটাল শিক্ষা ব্যবস্থাপনা',
   established_year: '২০২৬',
   hero_title: 'প্রাথমিক ইসলামিক শিক্ষায় ডিজিটাল বিপ্লব',

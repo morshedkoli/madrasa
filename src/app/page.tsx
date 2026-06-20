@@ -21,7 +21,7 @@ import { sql } from '@/lib/db-server'
 
 // ─── Default branding (fallback when DB table doesn't exist) ─────────────────
 const defaultBranding = {
-  name: 'মাদ্রাসা ম্যানেজমেন্ট',
+  name: 'জামিয়া ইসলামিয়া সিরাজুল উলূম সূর্যকান্দি',
   tagline: 'ডিজিটাল শিক্ষা ব্যবস্থাপনা',
   established_year: '২০২৬',
   hero_title: 'প্রাথমিক ইসলামিক শিক্ষায় ডিজিটাল বিপ্লব',
@@ -124,7 +124,7 @@ const portals = [
     title: 'শিক্ষক পোর্টাল',
     badge: 'শিক্ষক',
     desc: 'আপনার শ্রেণি পরিচালনা — উপস্থিতি চিহ্নিত করুন, গ্রেড দিন ও শিক্ষার্থীদের প্রোফাইল দেখুন।',
-    features: ['দৈনিক উপস্থিতি', 'গ্রেড এন্ট্রি', 'শিক্ষার্থীর তালিকা', 'স্কুল নোটিশ'],
+    features: ['দৈনিক উপস্থিতি', 'গ্রেড এন্ট্রি', 'শিক্ষার্থীর তালিকা', 'মাদ্রাসা নোটিশ'],
     href: '/auth/login',
     gradient: 'from-amber-500 to-orange-500',
     icon: GraduationCap,
