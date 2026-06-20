@@ -13,7 +13,7 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
 [![Neon DB](https://img.shields.io/badge/Neon-PostgreSQL-00E5E5?style=for-the-badge&logo=postgresql)](https://neon.tech)
 
-[Live Demo](http://localhost:3000) · [GitHub Issues](https://github.com/morshedkoli/madrasa/issues) · [Database Schema](supabase/migrations/00001_schema.sql)
+[Live Demo](https://madrasa-fawn.vercel.app) · [GitHub Issues](https://github.com/morshedkoli/madrasa/issues) · [Database Schema](supabase/migrations/00001_schema.sql)
 
 ---
 
