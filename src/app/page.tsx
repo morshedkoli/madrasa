@@ -19,6 +19,36 @@ import {
 } from 'lucide-react'
 import { sql } from '@/lib/db-server'
 
+// ─── Default branding (fallback when DB table doesn't exist) ─────────────────
+const defaultBranding = {
+  name: 'মাদ্রাসা ম্যানেজমেন্ট',
+  tagline: 'ডিজিটাল শিক্ষা ব্যবস্থাপনা',
+  established_year: '২০২৬',
+  hero_title: 'প্রাথমিক ইসলামিক শিক্ষায় ডিজিটাল বিপ্লব',
+  hero_subtitle:
+    'মাদ্রাসা পরিচালনার সমস্ত জটিলতা এক প্ল্যাটফর্মে সমাধান করুন। শিক্ষার্থীর রেকর্ড, শিক্ষক ব্যবস্থাপনা, আর্থিক লেনদেন ও রিপোর্টিং — সবকিছু আধুনিক ও সহজ উপায়ে।',
+  about_text_1:
+    'আমাদের মাদ্রাসা ইসলামী মূল্যবোধে প্রোথিত মানসম্পন্ন প্রাথমিক শিক্ষা প্রদানে নিবেদিত। আমরা ঐতিহ্যবাহী ইসলামিক শিক্ষাকে আধুনিক একাডেমিক কারিকুলামের সাথে সমন্বয় করে সু-বিকশিত ব্যক্তিত্ব গঠনে কাজ করি।',
+  about_text_2:
+    'এই ম্যানেজমেন্ট সিস্টেম প্রশাসক, শিক্ষক ও হিসাবরক্ষকদের জন্য ডিজিটাল টুল সরবরাহ করে — সবকিছু একটি একক প্ল্যাটফর্ম থেকে।',
+  address: '১২৩ ইসলামিক স্ট্রিট, ঢাকা',
+  phone: '+৮৮০-XXX-XXXXXX',
+  email: 'info@madrasa.edu',
+  office_hours: 'শনি-বৃহস্পতি ৮:০০–২:০০',
+  footer_tagline: 'প্রযুক্তির মাধ্যমে ইসলামিক শিক্ষাকে শক্তিশালীকরণ',
+}
+
+// ─── Branding data fetching ──────────────────────────────────────────────────
+async function getBrandingSettings() {
+  try {
+    const rows = await sql`SELECT * FROM madrasa_settings WHERE id = 1 LIMIT 1`
+    if ((rows as any[]).length === 0) return defaultBranding
+    return { ...defaultBranding, ...(rows as any[])[0] }
+  } catch {
+    return defaultBranding
+  }
+}
+
 // ─── Server-side data fetching ───────────────────────────────────────────────
 async function getHomeStats() {
   try {
@@ -128,8 +158,8 @@ const featureItems = [
 
 // ─── Page Component (async Server Component) ─────────────────────────────────
 export default async function HomePage() {
-  const { students, teachers, classes, yearlyIncome, satisfactionRate, notices } =
-    await getHomeStats()
+  const [{ students, teachers, classes, yearlyIncome, satisfactionRate, notices }, branding] =
+    await Promise.all([getHomeStats(), getBrandingSettings()])
 
   const stats = [
     {
@@ -194,10 +224,10 @@ export default async function HomePage() {
                 className="font-bold text-[#1B6B3A] leading-none block"
                 style={{ fontFamily: "'Anek Bangla', 'Hind Siliguri', sans-serif", fontSize: '17px' }}
               >
-                মাদ্রাসা ম্যানেজমেন্ট
+                {branding.name}
               </span>
               <span className="text-xs text-gray-400 block leading-none mt-0.5">
-                ডিজিটাল শিক্ষা ব্যবস্থাপনা
+                {branding.tagline}
               </span>
             </div>
           </Link>
@@ -261,7 +291,7 @@ export default async function HomePage() {
               }}
             >
               <Sparkles className="w-4 h-4" />
-              প্রতিষ্ঠিত ২০২৬ — ডিজিটাল শিক্ষা সমাধান
+              প্রতিষ্ঠিত {branding.established_year} — ডিজিটাল শিক্ষা সমাধান
             </div>
 
             <h1
@@ -271,9 +301,8 @@ export default async function HomePage() {
                 letterSpacing: '-0.5px',
               }}
             >
-              প্রাথমিক ইসলামিক শিক্ষায়{' '}
               <span className="relative inline-block" style={{ color: '#1B6B3A' }}>
-                ডিজিটাল বিপ্লব
+                {branding.hero_title}
                 <svg
                   className="absolute -bottom-2 left-0 w-full"
                   viewBox="0 0 200 8"
@@ -293,8 +322,7 @@ export default async function HomePage() {
             <p
               className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed"
             >
-              মাদ্রাসা পরিচালনার সমস্ত জটিলতা এক প্ল্যাটফর্মে সমাধান করুন। শিক্ষার্থীর রেকর্ড,
-              শিক্ষক ব্যবস্থাপনা, আর্থিক লেনদেন ও রিপোর্টিং — সবকিছু আধুনিক ও সহজ উপায়ে।
+              {branding.hero_subtitle}
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
@@ -450,15 +478,8 @@ export default async function HomePage() {
               <span style={{ color: '#1B6B3A' }}>আধুনিক সমাধান</span>
             </h2>
             <div className="space-y-4 text-gray-500 leading-relaxed">
-              <p>
-                আমাদের মাদ্রাসা ইসলামী মূল্যবোধে প্রোথিত মানসম্পন্ন প্রাথমিক শিক্ষা প্রদানে
-                নিবেদিত। আমরা ঐতিহ্যবাহী ইসলামিক শিক্ষাকে আধুনিক একাডেমিক কারিকুলামের সাথে
-                সমন্বয় করে সু-বিকশিত ব্যক্তিত্ব গঠনে কাজ করি।
-              </p>
-              <p>
-                এই ম্যানেজমেন্ট সিস্টেম প্রশাসক, শিক্ষক ও হিসাবরক্ষকদের জন্য ডিজিটাল টুল
-                সরবরাহ করে — সবকিছু একটি একক প্ল্যাটফর্ম থেকে।
-              </p>
+              <p>{branding.about_text_1}</p>
+              <p>{branding.about_text_2}</p>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-4">
               {aboutItems.map((item) => (
@@ -511,13 +532,13 @@ export default async function HomePage() {
                 className="text-2xl font-bold text-white mb-3 relative z-10"
                 style={{ fontFamily: "'Anek Bangla', 'Hind Siliguri', sans-serif" }}
               >
-                মাদ্রাসা ম্যানেজমেন্ট সিস্টেম
+                {branding.name}
               </h3>
               <p
                 className="text-sm relative z-10"
                 style={{ color: 'rgba(255,255,255,0.65)' }}
               >
-                শিক্ষায় উৎকর্ষতা, ২০২৬ সাল থেকে
+                শিক্ষায় উৎকর্ষতা, {branding.established_year} সাল থেকে
               </p>
 
               {/* Live stat pill inside the green card */}
@@ -691,10 +712,10 @@ export default async function HomePage() {
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'ঠিকানা', value: '১২৩ ইসলামিক স্ট্রিট, ঢাকা' },
-              { label: 'ফোন', value: '+৮৮০-XXX-XXXXXX' },
-              { label: 'ইমেইল', value: 'info@madrasa.edu' },
-              { label: 'সময়সূচি', value: 'শনি-বৃহস্পতি ৮:০০–২:০০' },
+              { label: 'ঠিকানা', value: branding.address },
+              { label: 'ফোন', value: branding.phone },
+              { label: 'ইমেইল', value: branding.email },
+              { label: 'সময়সূচি', value: branding.office_hours },
             ].map((item) => (
               <div
                 key={item.label}
@@ -733,13 +754,13 @@ export default async function HomePage() {
                     fontSize: '17px',
                   }}
                 >
-                  মাদ্রাসা ম্যানেজমেন্ট সিস্টেম
+                  {branding.name}
                 </span>
                 <span
                   className="text-xs block"
                   style={{ color: 'rgba(255,255,255,0.5)' }}
                 >
-                  প্রযুক্তির মাধ্যমে ইসলামিক শিক্ষাকে শক্তিশালীকরণ
+                  {branding.footer_tagline}
                 </span>
               </div>
             </div>

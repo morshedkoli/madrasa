@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Modal } from '@/components/shared/Modal'
-import { Plus, Check } from 'lucide-react'
+import { Plus, Check, Palette, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import toast from 'react-hot-toast'
 import type { AcademicYear, Profile } from '@/lib/types'
 
@@ -77,6 +78,7 @@ export default function SettingsPage() {
           <TabsTrigger value="academic-years">শিক্ষাবর্ষ</TabsTrigger>
           <TabsTrigger value="users">ব্যবহারকারী ব্যবস্থাপনা</TabsTrigger>
           <TabsTrigger value="school">স্কুল প্রোফাইল</TabsTrigger>
+          <TabsTrigger value="branding">ব্র্যান্ডিং</TabsTrigger>
         </TabsList>
 
         <TabsContent value="academic-years">
@@ -143,6 +145,29 @@ export default function SettingsPage() {
                 <div className="space-y-2"><label className="text-sm font-medium">ইমেইল</label><Input defaultValue="info@madrasa.edu" /></div>
               </div>
               <Button>সেটিংস সংরক্ষণ</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="branding">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Palette className="w-5 h-5" style={{ color: '#1B6B3A' }} />
+                মাদ্রাসার ব্র্যান্ডিং সেটিংস
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-500 mb-6">
+                মাদ্রাসার নাম, ট্যাগলাইন, হিরো টেক্সট, যোগাযোগ তথ্য বৃত্তিয় সম্পাদন করুন যা হোম পেজে সরাসরি প্রদর্শিত হবে।
+              </p>
+              <Link href="/admin/settings/branding">
+                <Button className="flex items-center gap-2">
+                  <Palette className="w-4 h-4" />
+                  ব্র্যান্ডিং পেজে যান
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </TabsContent>
